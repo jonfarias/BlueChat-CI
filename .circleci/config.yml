@@ -23,9 +23,6 @@ jobs:
   Build:
     docker:
       - image: cimg/python:3.8
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASSWD
     steps:
       - checkout
       - setup_remote_docker:
@@ -37,9 +34,6 @@ jobs:
   Publish:
     docker:
       - image: cimg/python:3.8
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASSWD
     steps:
       - checkout
       - setup_remote_docker:
