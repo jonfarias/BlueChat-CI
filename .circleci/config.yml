@@ -76,7 +76,7 @@ workflows:
               only: main
       - GenerateYAML:
           requires:
-            - Publish
+            - Build and Publish
           filters:
             branches:
               only: main
