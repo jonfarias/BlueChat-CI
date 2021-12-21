@@ -68,15 +68,9 @@ workflows:
           filters:
             branches:
               only: main
-      - Build:
+      - Build and Publish:
           requires:
             - Test
-          filters:
-            branches:
-              only: main
-      - Publish:
-          requires:
-            - Build
           filters:
             branches:
               only: main
