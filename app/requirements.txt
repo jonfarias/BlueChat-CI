@@ -1,0 +1,9 @@
+wheel
+flask
+flask_sqlalchemy
+flask_login
+flask-socketio
+werkzeug
+mysqlclient
+Flask-Session
+python-dotenv

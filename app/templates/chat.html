@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="ChatRoom">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %} 
+            <div class="notification is-success">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <h1 class="title">Chat&nbsp;<i class="fas fa-comment-alt"></i></i></h1>
+    <div class="tile is-ancestor">
+      <div class="tile is-12 is-vertical is-parent">
+        <div class="tile is-child box">
+            <textarea id="chat" class="textarea is-focused" cols="120" rows="25" placeholder="Sem mensagens. Você pode digitar alguma mensagem no bloco abaixo."></textarea><br /><br />
+        </div>
+        <div class="tile is-child">
+          <div class="field has-addons">
+            <div class="control is-expanded has-icons-left">
+              <input id="text" class="input is-medium" type="text" placeholder="Mensagem" />
+              <span class="icon is-medium is-left">
+                <i class="fas fa-keyboard"></i>
+              </span>
+            </div>
+            <div class="control">
+              <button type="button" id="send" class="button is-medium is-primary">
+                Enviar &nbsp;<i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+{% endblock %}
