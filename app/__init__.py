@@ -4,19 +4,29 @@ from flask_login import LoginManager
 from flask_socketio import SocketIO
 from flask_session import Session
 #Environment Variables
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 
 db = SQLAlchemy()
 socketio = SocketIO()
-load_dotenv()
+#load_dotenv()
 
 def create_app():
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['SESSION_TYPE'] = os.getenv('SESSION_TYPE')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    user = os.environ.get("MYSQL_USER")
+    pwd = os.environ.get("MYSQL_PASSWORD")
+    host = os.environ.get("MYSQL_HOST")
+    port = os.environ.get("MYSQL_PORT")
+    database = os.environ.get("MYSQL_DATABASE")
+
+    url = "mysql+pymysql://%s:%s@%s:%s/%s" %(user, pwd, host, port, database)
+
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+    app.config['SESSION_TYPE'] = os.environ.get('SESSION_TYPE')
+    app.config['SQLALCHEMY_DATABASE_URI'] = url
+    app.config['SQLALCHEMY_ECHO'] = True
+    #app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)

@@ -6,4 +6,5 @@ flask-socketio
 werkzeug
 mysqlclient
 Flask-Session
+PyMySQL
 python-dotenv

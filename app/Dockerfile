@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP=/usr/src/app
 
-ENV FLASK_ENV=production
+ENV FLASK_ENV=development
 
 EXPOSE 5000:5000
 
