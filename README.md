@@ -1,4 +1,4 @@
-<h1 align="center"><img alt="bluechat" src="https://github.com/jonfarias/BlueChat-CI/blob/main/app/static/images/blue-chat.png" height="35" width="170"></h1>
+<h1 align="center">BlueChat</h1>
 
 
 Integração contínua de uma aplicação de Chat desenvolvida utilizando o Microframework Flask para a Disciplina de TCC do curso de Telemática .
