@@ -42,8 +42,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - attach_workspace:
-          at: /tmp/workspace
+      #- attach_workspace:
+      #    at: /tmp/workspace
       - run : |
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
