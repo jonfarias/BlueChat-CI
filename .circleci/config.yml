@@ -16,7 +16,7 @@ jobs:
           command: |
             virtualenv bluechat
             . bluechat/bin/activate
-            pip install --no-cache-dir -r app/requirements.txt
+            pip install --no-cache-dir -r requirements.txt
       #- run:
       #    name: Run Tests
       #    command: |
@@ -35,7 +35,7 @@ jobs:
           docker_layer_caching: true
       - run: |
           TAG=0.$CIRCLE_BUILD_NUM
-          docker build -t $DOCKER_USER/bluechat:$TAG app/.
+          docker build -t $DOCKER_USER/bluechat:$TAG .
           echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
           docker push $DOCKER_USER/bluechat:$TAG
           docker tag $DOCKER_USER/bluechat:$TAG $DOCKER_USER/bluechat:latest
@@ -44,14 +44,12 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - checkout:
-          path: ~/BlueChat-CI
       - attach_workspace:
           at: ~/BlueChat-CI/
       - run : |
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
-          cp k8s/chat-deploy.yaml /tmp/BlueChat-CD
+          cp chat-deploy.yaml /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           sed -i 's/\(bluechat\)\(.*\)/\1:'$TAG'/' ./chat-deploy.yaml
           git config credential.helper 'cache --timeout=120'
