@@ -3,6 +3,7 @@ orbs:
   python: circleci/python@1.2
 jobs:
   Test: 
+    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/python:3.8
         environment:
