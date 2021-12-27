@@ -9,3 +9,7 @@ Integração contínua de uma aplicação de Chat desenvolvida utilizando o Micr
   <img alt="Docker Image Version (latest by date)" src="https://img.shields.io/docker/v/jonfarias/bluechat-web">
 </p>
 
+<h2>Bluechat-CD</h2>
+https://github.com/jonfarias/BlueChat-CD
+
+
