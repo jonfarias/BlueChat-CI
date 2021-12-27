@@ -1,4 +1,4 @@
-<h1 align="center">BlueChat</h1>
+<h1 align="center">BlueChat-CI</h1>
 
 
 Integração contínua de uma aplicação de Chat desenvolvida utilizando o Microframework Flask para a Disciplina de TCC do curso de Telemática .
