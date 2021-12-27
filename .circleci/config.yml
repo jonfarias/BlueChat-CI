@@ -48,6 +48,7 @@ jobs:
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
           pwd
+          ls
           cp chat-deploy.yaml /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           sed -i 's/\(bluechat\)\(.*\)/\1:'$TAG'/' ./chat-deploy.yaml
