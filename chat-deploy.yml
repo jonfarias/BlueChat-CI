@@ -1,0 +1,48 @@
+#Service Bluechat
+apiVersion: v1
+kind: Service
+metadata:
+  name: bluechat
+spec:
+  type: NodePort
+  selector:
+    app: bluechat
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+    nodePort: 30000
+
+---
+#Deploy Bluechat
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluechat-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+        name: bluechat
+        labels:
+          app: bluechat
+    spec:
+      initContainers:
+        - name: check-mysql
+          image: busybox:1.31.1
+          command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
+      containers:
+      - name: bluechat-container
+        image: jonfarias/bluechat:$TAG
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: bluechat
+  selector:
+    matchLabels:
+      app: bluechat
