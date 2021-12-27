@@ -3,18 +3,20 @@ orbs:
   python: circleci/python@1.2
 jobs:
   Test: 
+    working_directory: ~/BlueChat-CI/app
     docker:
       - image: cimg/python:3.8
         environment:
           FLASK_CONFIG: testing
     steps:
-      - checkout
+      - checkout:
+          path: ~/BlueChat-CI
       - run:
           name: Setup VirtualEnv
           command: |
             virtualenv bluechat
             . bluechat/bin/activate
-            pip install --no-cache-dir -r app/requirements.txt
+            pip install --no-cache-dir -r requirements.txt
       #- run:
       #    name: Run Tests
       #    command: |
@@ -39,15 +41,18 @@ jobs:
           docker tag $DOCKER_USER/bluechat:$TAG $DOCKER_USER/bluechat:latest
           docker push $DOCKER_USER/bluechat:latest
   GenerateYAML:
+    working_directory: ~/BlueChat-CI/k8s
     docker:
       - image: cimg/base:stable
     steps:
+      - checkout:
+          path: ~/BlueChat-CI
       #- attach_workspace:
       #    at: /tmp/workspace
       - run : |
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
-          cp ~/BlueChat-CI/k8s/chat-deploy.yaml /tmp/BlueChat-CD
+          cp chat-deploy.yaml /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           sed -i 's/\(bluechat\)\(.*\)/\1:'$TAG'/' ./chat-deploy.yaml
           git config credential.helper 'cache --timeout=120'
