@@ -46,7 +46,7 @@ jobs:
           at: /tmp/workspace
       - run : |
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
-          git clone https://github.com/jonfarias/BueChat-CD /tmp/BlueChat-CD
+          git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           cp /tmp/workspace/chat-deploy.yaml .
           sed -i 's/\(bluechat\)\(.*\)/\1:'$TAG'/' ./chat-deploy.yaml
@@ -56,7 +56,7 @@ jobs:
           git add .
           git commit -m "Update via CircleCI"
           # Push quietly to prevent showing the token in log
-          git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BueChat-CD.git master
+          git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git master
 
 
 
