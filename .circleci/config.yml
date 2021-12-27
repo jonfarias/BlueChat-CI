@@ -3,7 +3,6 @@ orbs:
   python: circleci/python@1.2
 jobs:
   Test: 
-    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/python:3.8
         environment:
@@ -41,7 +40,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: |
-          cp /tmp/workspace/app .
+          cp -r /tmp/workspace/app .
           TAG=0.$CIRCLE_BUILD_NUM
           docker build -t $DOCKER_USER/bluechat:$TAG .
           echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
