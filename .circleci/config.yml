@@ -41,14 +41,13 @@ jobs:
           docker tag $DOCKER_USER/bluechat:$TAG $DOCKER_USER/bluechat:latest
           docker push $DOCKER_USER/bluechat:latest
   GenerateYAML:
-    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/base:stable
     steps:
       - checkout:
           path: ~/BlueChat-CI
-      #- attach_workspace:
-      #    at: /tmp/workspace
+      - attach_workspace:
+          at: ~/BlueChat-CI/
       - run : |
           TAG=0.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
