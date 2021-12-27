@@ -63,7 +63,8 @@ jobs:
           git config user.name "BlueChat-CircleCI"
           git add .
           git commit -m "Update via CircleCI"
-          # Push quietly to prevent showing the token in log
+          git branch -M main
+          # Push quietly
           git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
 
 
