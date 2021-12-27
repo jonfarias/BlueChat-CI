@@ -3,7 +3,7 @@ orbs:
   python: circleci/python@1.2
 jobs:
   Test: 
-    working_directory: ~/BlueChat-CI/app
+    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/python:3.8
         environment:
@@ -41,7 +41,7 @@ jobs:
           docker tag $DOCKER_USER/bluechat:$TAG $DOCKER_USER/bluechat:latest
           docker push $DOCKER_USER/bluechat:latest
   GenerateYAML:
-    working_directory: ~/BlueChat-CI/k8s
+    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/base:stable
     steps:
