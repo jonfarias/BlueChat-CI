@@ -40,9 +40,47 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5000
-        envFrom:
-        - configMapRef:
-            name: bluechat
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: mysql-database
+        - name: MYSQL_USER
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: mysql-password
+        - name: MYSQL_HOST
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: mysql-host
+        - name: MYSQL_PORT
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: mysql-port
+        - name: SECRET_KEY
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: secret-key
+        - name: SESSION_TYPE
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: session-type    
+        - name: FLASK_ENV
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret
+                key: flask-env    
   selector:
     matchLabels:
       app: bluechat
