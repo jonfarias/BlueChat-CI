@@ -2,6 +2,5 @@ db/
 app/flask_session/
 app/__pycache__/
 app/.env
-terraform/variables.tf
 docker-compose.yml
 user.sql

@@ -4,14 +4,13 @@ kind: Service
 metadata:
   name: bluechat
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: bluechat
   ports:
   - name: http
     port: 80
     targetPort: 5000
-    nodePort: 30000
 
 ---
 #Deploy Bluechat
