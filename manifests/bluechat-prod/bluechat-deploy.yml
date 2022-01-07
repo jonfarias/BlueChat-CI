@@ -1,8 +1,15 @@
+#Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bluechat-prod
+---
 #Service Bluechat
 apiVersion: v1
 kind: Service
 metadata:
   name: bluechat
+  namespace: bluechat-prod
 spec:
   type: ClusterIP
   selector:
@@ -18,6 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bluechat-deploy
+  namespace: bluechat-prod
 spec:
   replicas: 1
   template:
@@ -29,7 +37,7 @@ spec:
       initContainers:
         - name: check-mysql
           image: busybox:1.31.1
-          command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
+          command: ['sh', '-c', 'until nslookup db.bluechat-prod.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
       containers:
       - name: bluechat-container
         image: jonfarias/bluechat-web:$TAG
