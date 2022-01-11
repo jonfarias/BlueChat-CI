@@ -1,6 +1,6 @@
 var socket;
         $(document).ready(function(){
-            socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
+            socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
             socket.on('connect', function() {
                 socket.emit('join', {});
             });
@@ -18,10 +18,3 @@ var socket;
                     socket.emit('text', {msg: text});
                 });
             });
-            function leave_room() {
-                socket.emit('left', {}, function() {
-                    socket.disconnect();
-                    // go back to the login page
-                    window.location.href = "{{ url_for('index') }}";
-                });
-            }
