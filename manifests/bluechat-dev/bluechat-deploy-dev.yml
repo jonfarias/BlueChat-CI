@@ -1,0 +1,93 @@
+#Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bluechat-dev
+---
+#Service Bluechat
+apiVersion: v1
+kind: Service
+metadata:
+  name: bluechat
+  namespace: bluechat-dev
+spec:
+  type: ClusterIP
+  selector:
+    app: bluechat
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+
+---
+#Deploy Bluechat
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluechat-deploy
+  namespace: bluechat-dev
+spec:
+  replicas: 1
+  template:
+    metadata:
+        name: bluechat
+        labels:
+          app: bluechat
+    spec:
+      initContainers:
+        - name: check-mysql
+          image: busybox:1.31.1
+          command: ['sh', '-c', 'until nslookup db.bluechat-prod.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
+      containers:
+      - name: bluechat-container
+        image: jonfarias/bluechat-web:$TAG
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: mysql-database
+        - name: MYSQL_USER
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: mysql-password
+        - name: MYSQL_HOST
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: mysql-host
+        - name: MYSQL_PORT
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: mysql-port
+        - name: SECRET_KEY
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: secret-key
+        - name: SESSION_TYPE
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: session-type    
+        - name: FLASK_ENV
+          valueFrom:
+              secretKeyRef:
+                name: bluechat-secret-dev
+                key: flask-env    
+  selector:
+    matchLabels:
+      app: bluechat
