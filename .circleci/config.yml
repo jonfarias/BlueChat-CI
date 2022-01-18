@@ -17,11 +17,11 @@ jobs:
             virtualenv bluechat
             . bluechat/bin/activate
             pip install --no-cache-dir -r app/requirements.txt
-      #- run:
-      #    name: Run Tests
-      #    command: |
-      #      . helloworld/bin/activate
-      #      python test_hello_world.py
+      - run:
+          name: Run Tests
+          command: |
+            . bluechat/bin/activate
+            pytest chat/test/ -v
       - persist_to_workspace:
           root: .
           paths:

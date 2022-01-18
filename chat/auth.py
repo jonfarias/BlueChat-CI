@@ -3,8 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User
 from flask_socketio import join_room, leave_room, emit
-from . import socketio
-from . import db
+from .app import socketio
+from .app import db
 
 auth = Blueprint('auth', __name__)
 
@@ -31,7 +31,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    #flash('Login feito com sucesso.')
+    flash('Login feito com sucesso.')
     return redirect(url_for('main.chat'))
 
 @auth.route('/signup')

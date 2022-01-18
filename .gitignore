@@ -1,6 +1,10 @@
 db/
-app/flask_session/
-app/__pycache__/
-app/.env
+chat/flask_session/
+chat/__pycache__/
+chat/.env
+chat/.pytest_cache
+chat/test/.env
+chat/test/.pytest_cache/
+chat/test/__pycache__/
 docker-compose.yml
 user.sql

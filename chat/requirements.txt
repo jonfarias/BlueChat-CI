@@ -8,3 +8,8 @@ mysqlclient
 Flask-Session
 PyMySQL
 python-dotenv
+Flask-Testing
+pytest
+pytest-flask
+flask-shell-ipython
+

@@ -1,0 +1,23 @@
+<!-- app/templates/errors/404.html -->
+
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+
+<div class="container is-widescreen">
+    <div class="notification is-danger">
+        <h1><strong>404 Error</strong></h1>
+        <h3> Ops. Esta página não existe. </h3>
+        <a href="{{ url_for('main.index') }}">
+            <i class="fa fa-home"></i>
+            Home
+        </a>
+    </div>
+</div>
+
+<div class="container is-widescreen">
+    <div class="notification is-light">
+        <img src="../../static/images/404.svg" alt="404" width="600" height="600">>
+    </div>
+</div>
+{% endblock %}

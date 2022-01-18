@@ -2,7 +2,7 @@ FROM alpine:latest
 
 LABEL MAINTAINER="Jonathan Farias <jonathan.developer10@gmail.com>"
 
-WORKDIR /usr/src/app 
+WORKDIR /usr/src/chat/
 
 RUN apk --update --no-cache add python3-dev py3-pip libffi-dev gcc \
                                 musl-dev make libevent-dev build-base mariadb-dev \
@@ -12,7 +12,7 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENV FLASK_APP=/usr/src/app
+ENV FLASK_APP=/usr/src/chat/app.py
 
 ENV FLASK_ENV=development
 
