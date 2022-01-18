@@ -123,7 +123,7 @@ workflows:
             branches:
               only: main
           context:
-            - slack
+            - Slack
       - Build and Publish:
           requires:
             - Test
@@ -131,7 +131,7 @@ workflows:
             branches:
               only: main
           context:
-            - slack
+            - Slack
       - GenerateYAML-dev:
           requires:
             - Build and Publish
@@ -139,4 +139,4 @@ workflows:
             branches:
               only: main
           context:
-            - slack
+            - Slack
