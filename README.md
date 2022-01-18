@@ -1,15 +1,21 @@
-<h1 align="center">BlueChat-CI</h1>
+# Kubeval
+
+`kubeval` is a tool for validating a Kubernetes YAML or JSON configuration file.
+It does so using schemas generated from the Kubernetes OpenAPI specification, and
+therefore can validate schemas for multiple versions of Kubernetes.
+
+[![CircleCI](https://circleci.com/gh/instrumenta/kubeval.svg?style=svg)](https://circleci.com/gh/instrumenta/kubeval)
+[![Go Report
+Card](https://goreportcard.com/badge/github.com/instrumenta/kubeval)](https://goreportcard.com/report/github.com/instrumenta/kubeval)
+[![GoDoc](https://godoc.org/github.com/instrumenta/kubeval?status.svg)](https://godoc.org/github.com/instrumenta/kubeval)
 
 
-Integração contínua de uma aplicação de Chat desenvolvida utilizando o Microframework Flask para a Disciplina de TCC do curso de Telemática .
-
-<p align="center">
-  <a href="https://circleci.com/gh/jonfarias/BlueChat-CI/tree/main"><img src="https://circleci.com/gh/jonfarias/BlueChat-CI/tree/main.svg?style=svg"></a>
-  <img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/jonfarias/bluechat-web">
-  <img alt="Docker Image Version (latest by date)" src="https://img.shields.io/docker/v/jonfarias/bluechat-web">
-</p>
-
-<h2>Bluechat-CD</h2>
-https://github.com/jonfarias/BlueChat-CD
+```
+$ kubeval my-invalid-rc.yaml
+WARN - fixtures/my-invalid-rc.yaml contains an invalid ReplicationController - spec.replicas: Invalid type. Expected: [integer,null], given: string
+$ echo $?
+1
+```
 
 
+For full usage and installation instructions see [kubeval.com](https://kubeval.com/).
