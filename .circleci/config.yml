@@ -57,28 +57,28 @@ jobs:
       - notify_slack_error
       - notify_slack_pass
 
-    Test YAML:
-      docker:
-        - image: cimg/base:stable
-      steps:
-        - attach_workspace:
-            at: /tmp/workspace
-        - run:
-            name: Install kubeval
-            command: |
-              wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-              tar xf kubeval-linux-amd64.tar.gz
-        - run:
-            name: Test YAML - DEV
-            command: |
-              ./kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
-        - run:
-            name: Test YAML - PROD
-            command: |
-              ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
+  Test YAML:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Install kubeval
+          command: |
+            wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
+            tar xf kubeval-linux-amd64.tar.gz
+      - run:
+          name: Test YAML - DEV
+          command: |
+            ./kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
+      - run:
+          name: Test YAML - PROD
+          command: |
+             ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
 
-        - notify_slack_error
-        - notify_slack_pass
+      - notify_slack_error
+      - notify_slack_pass
 
   Build and Publish-DEV:
     docker:
