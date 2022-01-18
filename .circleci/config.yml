@@ -87,8 +87,7 @@ jobs:
           command: |
             wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
             tar xf kubeval-linux-amd64.tar.gz
-            cp kubeval /usr/local/bin
-            kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
+            ./kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
 
       - run : 
           name: Deploy YAML
