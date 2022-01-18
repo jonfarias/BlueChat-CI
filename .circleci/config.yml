@@ -55,7 +55,31 @@ jobs:
           paths:
             - ./manifests
       - notify_slack_error
+      - notify_slack_pass
 
+    YAML Test:
+      docker:
+      - image: cimg/base:stable
+      steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Install kubeval
+          command: |
+            wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
+            tar xf kubeval-linux-amd64.tar.gz
+      - run:
+          name: Test YAML - DEV
+          command: |
+            ./kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
+      - run:
+          name: Test YAML - PROD
+          command: |
+            ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
+
+      - notify_slack_error
+      - notify_slack_pass
+      
   Build and Publish-DEV:
     docker:
       - image: cimg/python:3.8
@@ -82,13 +106,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run:
-          name: Test YAML
-          command: |
-            wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-            tar xf kubeval-linux-amd64.tar.gz
-            ./kubeval /tmp/workspace/manifests/bluechat-dev/bluechat-deploy-dev.yml
-
       - run : 
           name: Deploy YAML
           command: |
@@ -166,10 +183,18 @@ workflows:
               only: main
           context:
             - Slack
+      
+      - YAML Test:       
+          filters:
+            branches:
+              only: main
+          context:
+            - Slack
 
       - Build and Publish-DEV:
           requires:
             - Test
+            - YAML Test
           filters:
             branches:
               only: main
@@ -189,6 +214,7 @@ workflows:
           type: approval
           requires:
             - Test
+            - YAML Test
           filters:
             branches:
               only: main
