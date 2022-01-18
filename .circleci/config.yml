@@ -101,6 +101,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - run: |
+          echo "Aprove this task"
       - notify_slack_hold
   
 
@@ -177,7 +179,7 @@ workflows:
       - request-approval:
           type: approval
           requires:
-            - Build and Publish-DEV
+            - Test
           filters:
             branches:
               only: main
