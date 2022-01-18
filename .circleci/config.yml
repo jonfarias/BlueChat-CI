@@ -122,15 +122,21 @@ workflows:
           filters:
             branches:
               only: main
+          context:
+            - slack
       - Build and Publish:
           requires:
             - Test
           filters:
             branches:
               only: main
+          context:
+            - slack
       - GenerateYAML-dev:
           requires:
             - Build and Publish
           filters:
             branches:
               only: main
+          context:
+            - slack
