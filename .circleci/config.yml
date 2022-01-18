@@ -16,6 +16,19 @@ commands:
           event: pass
           template: basic_success_1
 
+  notify_slack_hold:
+    steps:
+      - slack/notify:
+          event: pass
+          template: basic_on_hold_1
+
+  notify_slack_deploy:
+    steps:
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
+
 jobs:
   Test: 
     working_directory: ~/BlueChat-CI/
@@ -42,7 +55,7 @@ jobs:
           paths:
             - ./manifests
       - notify_slack_error
-      - notify_slack_pass
+
   Build and Publish:
     docker:
       - image: cimg/python:3.8
@@ -62,7 +75,7 @@ jobs:
           docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:latest
           docker push $DOCKER_USER/bluechat-web:latest
       - notify_slack_error
-      - notify_slack_pass
+
   GenerateYAML-dev:
     docker:
       - image: cimg/base:stable
@@ -74,7 +87,7 @@ jobs:
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           cp -r /tmp/workspace/manifests .
-          sed -i 's/\(bluechat-web\)\(.*\)/\1:'$TAG'/' ./manifests/bluechat-prod/bluechat-deploy.yml
+          sed -i 's/\(bluechat-web\)\(.*\)/\1:'$TAG'/' ./manifests/bluechat-dev/bluechat-deploy-dev.yml
           git config credential.helper 'cache --timeout=120'
           git config user.email "jonathan.developer10@gmail.com"
           git config user.name "BlueChat-CircleCI"
@@ -82,8 +95,7 @@ jobs:
           git commit -m "Update via CircleCI - BUILD_NUM = $TAG"
           git branch -M main
           git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
-      - notify_slack_error
-      - notify_slack_pass
+      - notify_slack_deploy
 
   request-approval:
     docker:
@@ -104,7 +116,7 @@ jobs:
           git clone https://github.com/jonfarias/BlueChat-CD /tmp/BlueChat-CD
           cd /tmp/BlueChat-CD
           cp -r /tmp/workspace/manifests .
-          sed -i 's/\(bluechat-web\)\(.*\)/\1:'$TAG'/' ./manifests/bluechat-prod/bluechat-deploy.yml
+          sed -i 's/\(bluechat-web\)\(.*\)/\1:'$TAG'/' ./manifests/bluechat-prod/bluechat-deploy-prod.yml
           git config credential.helper 'cache --timeout=120'
           git config user.email "jonathan.developer10@gmail.com"
           git config user.name "BlueChat-CircleCI"
@@ -135,6 +147,15 @@ workflows:
       - GenerateYAML-dev:
           requires:
             - Build and Publish
+            - request-approval
+          filters:
+            branches:
+              only: main
+          context:
+            - Slack
+      - GenerateYAML-prod:
+          requires:
+            - GenerateYAML-dev
           filters:
             branches:
               only: main
