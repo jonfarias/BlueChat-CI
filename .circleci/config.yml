@@ -177,7 +177,7 @@ workflows:
       - request-approval:
           type: approval
           requires:
-            - GenerateYAML-DEV
+            - Build and Publish-DEV
           filters:
             branches:
               only: main
