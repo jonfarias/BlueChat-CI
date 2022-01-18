@@ -57,7 +57,7 @@ jobs:
       - notify_slack_error
       - notify_slack_pass
 
-    Yaml Test:
+    Test YAML:
       docker:
       - image: cimg/base:stable
       steps:
@@ -184,7 +184,7 @@ workflows:
           context:
             - Slack
       
-      - Yaml Test:       
+      - Test YAML:       
           filters:
             branches:
               only: main
@@ -194,7 +194,7 @@ workflows:
       - Build and Publish-DEV:
           requires:
             - Test
-            - Yaml Test
+            - Test YAML
           filters:
             branches:
               only: main
@@ -214,7 +214,7 @@ workflows:
           type: approval
           requires:
             - Test
-            - Yaml Test
+            - Test YAML
           filters:
             branches:
               only: main
