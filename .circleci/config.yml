@@ -95,15 +95,13 @@ jobs:
           git commit -m "Update via CircleCI - BUILD_NUM = $TAG"
           git branch -M main
           git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
-      - notify_slack_deploy
+      - notify_slack_pass
 
   request-approval:
     docker:
       - image: cimg/base:stable
     steps:
-      - slack/notify:
-          event: hold
-          template: basic_on_hold_1
+      - notify_slack_hold
   
 
   Build and Publish-prod:
@@ -157,7 +155,7 @@ workflows:
               only: main
           context:
             - Slack
-            
+
       - Build and Publish-dev:
           requires:
             - Test
