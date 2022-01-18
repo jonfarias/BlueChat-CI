@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: bluechat-dev
+  name: bluechat-de
 ---
 #Service Bluechat
 apiVersion: v1
