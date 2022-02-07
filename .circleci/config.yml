@@ -44,6 +44,7 @@ jobs:
           command: |
             virtualenv bluechat
             . bluechat/bin/activate
+            pip update
             pip install --no-cache-dir -r chat/application/requirements.txt
       - run:
           name: Run Tests
@@ -75,7 +76,7 @@ jobs:
       - run:
           name: Test YAML - PROD
           command: |
-             ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
+            ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
 
       - notify_slack_error
       - notify_slack_pass
