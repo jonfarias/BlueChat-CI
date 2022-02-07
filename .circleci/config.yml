@@ -87,7 +87,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - run: |
-          echo "Ambiente de Desenvolvimento"
+          echo "Init Build and Deploy of Development Environment"
       - notify_slack_hold
 
   Build and Publish-DEV:
