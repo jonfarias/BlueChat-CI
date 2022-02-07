@@ -79,6 +79,14 @@ jobs:
 
       - notify_slack_error
       - notify_slack_pass
+  
+  Development:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run: |
+          echo "Ambiente de Desenvolvimento"
+      - notify_slack_hold
 
   Build and Publish-DEV:
     docker:
@@ -123,7 +131,7 @@ jobs:
             git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
       - notify_slack_pass
 
-  request-approval:
+  Aprovação:
     docker:
       - image: cimg/base:stable
     steps:
@@ -191,10 +199,20 @@ workflows:
           context:
             - Slack
 
-      - Build and Publish-DEV:
+      - Development:
+          type: approval
           requires:
             - Test
             - Test YAML
+          filters:
+            branches:
+              only: main
+          context:
+            - Slack 
+
+      - Build and Publish-DEV:
+          requires:
+            - Development
           filters:
             branches:
               only: main
@@ -210,7 +228,7 @@ workflows:
           context:
             - Slack
 
-      - request-approval:
+      - Aprovação:
           type: approval
           requires:
             - Test
