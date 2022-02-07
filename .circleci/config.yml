@@ -131,7 +131,7 @@ jobs:
             git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
       - notify_slack_pass
 
-  Aprovação:
+  Approval:
     docker:
       - image: cimg/base:stable
     steps:
@@ -228,7 +228,7 @@ workflows:
           context:
             - Slack
 
-      - Aprovação:
+      - Approval:
           type: approval
           requires:
             - Test
@@ -241,7 +241,7 @@ workflows:
 
       - Build and Publish-PROD:
           requires:
-            - request-approval
+            - Approval
           filters:
             branches:
               only: main
