@@ -204,7 +204,6 @@ workflows:
             - Slack
 
       - Development:
-          type: approval
           requires:
             - Test
             - Test YAML
@@ -245,7 +244,7 @@ workflows:
 
       - Build and Publish-PROD:
           requires:
-            - Approval
+            - Production
           filters:
             branches:
               only: main
