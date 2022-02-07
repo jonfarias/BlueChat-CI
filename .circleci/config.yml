@@ -54,7 +54,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./manifests
+            - ./../manifests
       - notify_slack_error
       - notify_slack_pass
 
