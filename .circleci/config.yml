@@ -51,6 +51,10 @@ jobs:
           command: |
             . bluechat/bin/activate
             pytest chat/test/ -v
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - ./manifests
       - notify_slack_error
       - notify_slack_pass
 
@@ -58,15 +62,12 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - persist_to_workspace:
-          root: .
-          paths: 
-            - ./manifests
       - attach_workspace:
           at: /tmp/workspace
       - run:
           name: Install kubeval
           command: |
+            ls
             wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
             tar xf kubeval-linux-amd64.tar.gz
       - run:
