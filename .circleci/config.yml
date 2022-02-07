@@ -59,7 +59,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - persist_to_workspace:
-          root: ~/BlueChat-CI
+          root: .
           paths: 
             - ./manifests
       - attach_workspace:
