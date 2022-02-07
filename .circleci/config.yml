@@ -52,9 +52,9 @@ jobs:
             . bluechat/bin/activate
             pytest chat/test/ -v
       - persist_to_workspace:
-          root: .
-          paths:
-            - ./../manifests
+          root: ~/
+          paths: 
+            - ./Bluechat-CI/manifests
       - notify_slack_error
       - notify_slack_pass
 
