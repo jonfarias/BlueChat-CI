@@ -185,8 +185,6 @@ workflows:
             - Slack
       
       - Test YAML:      
-          requires:
-            - Test 
           filters:
             branches:
               only: main
@@ -196,6 +194,7 @@ workflows:
       - Build and Publish-DEV:
           requires:
             - Test
+            - Test YAML
           filters:
             branches:
               only: main

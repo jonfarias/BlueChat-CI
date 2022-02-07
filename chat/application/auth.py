@@ -54,7 +54,7 @@ def signup_post():
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
 
-    # add the new user to the database
+    # Adiciona um novo usuário ao banco de dados
     db.session.add(new_user)
     db.session.commit()
 
@@ -71,13 +71,15 @@ def logout():
 def join(message):
     room = 'room'
     join_room(room)
-    emit('status', {'msg':  session.get('email') + ' entrou'}, room=room)
+    mensage_join = session.get('email') + ' entrou'
+    emit('status', {'msg':  mensage_join}, room=room)
     
 #Enviar e Receber Mensagens
 @socketio.on('text', namespace='/chat')
 def text(message):
     room = 'room'
-    emit('message', {'msg': session.get('email') + ' : ' + message['msg']}, room=room)
+    mensage_text = session.get('email') + ' : ' + message['msg']
+    emit('message', {'msg': mensage_text}, room=room)
 
 #Sair do chat
 #@socketio.on('left', namespace='/chat')

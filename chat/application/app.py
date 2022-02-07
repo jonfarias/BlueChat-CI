@@ -8,7 +8,7 @@ from flask_session import Session
 import os
 
 db = SQLAlchemy()
-socketio = SocketIO()
+socketio = SocketIO(cors_allowed_origins="*")
 #load_dotenv()
 
 def create_app():
@@ -35,6 +35,19 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+    from .models import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
     @app.errorhandler(404)
     def page_not_found(error):
         return render_template('errors/404.html', title='Page Not Found'), 404
@@ -43,18 +56,6 @@ def create_app():
     def internal_server_error(error):
         return render_template('errors/500.html', title='Server Error'), 500
 
-    from .models import User
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
-    
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
-
-    
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    #socketio.run(app)
 
     return app

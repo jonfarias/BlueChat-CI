@@ -1,8 +1,8 @@
 db/
-chat/flask_session/
-chat/__pycache__/
-chat/.env
-chat/.pytest_cache
+chat/application/flask_session/
+chat/application/__pycache__/
+chat/application/.env
+chat/application/.pytest_cache
 chat/test/.env
 chat/test/.pytest_cache/
 chat/test/__pycache__/
