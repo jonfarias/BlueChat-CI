@@ -44,7 +44,7 @@ jobs:
           command: |
             virtualenv bluechat
             . bluechat/bin/activate
-            pip update
+            pip install --upgrade pip
             pip install --no-cache-dir -r chat/application/requirements.txt
       - run:
           name: Run Tests
