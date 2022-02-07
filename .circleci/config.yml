@@ -194,7 +194,9 @@ workflows:
           context:
             - Slack
       
-      - Test YAML:      
+      - Test YAML:
+          requires:
+            - "Test"      
           filters:
             branches:
               only: main
