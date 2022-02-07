@@ -51,10 +51,6 @@ jobs:
           command: |
             . bluechat/bin/activate
             pytest chat/test/ -v
-      - persist_to_workspace:
-          root: ~/
-          paths: 
-            - ./manifests
       - notify_slack_error
       - notify_slack_pass
 
@@ -62,6 +58,10 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - persist_to_workspace:
+          root: ~/BlueChat-CI
+          paths: 
+            - ./manifests
       - attach_workspace:
           at: /tmp/workspace
       - run:
