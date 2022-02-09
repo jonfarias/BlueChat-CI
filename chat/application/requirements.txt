@@ -7,13 +7,8 @@ Werkzeug
 mysqlclient
 Flask-Session
 PyMySQL
-#uWSGI
 python-dotenv
 pytest
 pytest-flask
 flask-shell-ipython
-#Gunicorn
-#gevent
-#gevent-websocket
-#eventlet
 simple-websocket

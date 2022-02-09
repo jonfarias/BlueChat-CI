@@ -58,11 +58,14 @@ def signup_post():
     db.session.add(new_user)
     db.session.commit()
 
+    flash('Usuário Cadastrado com Sucesso')
     return redirect(url_for('auth.login'))
 
 @auth.route('/logout')
 @login_required
 def logout():
+    session.pop('email', None)
+    session.pop('password', None)
     logout_user()
     return redirect(url_for('main.index'))
 
@@ -71,14 +74,14 @@ def logout():
 def join(message):
     room = 'room'
     join_room(room)
-    mensage_join = session.get('email') + ' entrou'
+    mensage_join = session.get('email') + " " + 'entrou'
     emit('status', {'msg':  mensage_join}, room=room)
     
 #Enviar e Receber Mensagens
 @socketio.on('text', namespace='/chat')
 def text(message):
     room = 'room'
-    mensage_text = session.get('email') + ' : ' + message['msg']
+    mensage_text = session.get('email') + " : " + message['msg']
     emit('message', {'msg': mensage_text}, room=room)
 
 #Sair do chat

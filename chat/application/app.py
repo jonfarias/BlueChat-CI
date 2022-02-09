@@ -56,6 +56,5 @@ def create_app():
     def internal_server_error(error):
         return render_template('errors/500.html', title='Server Error'), 500
 
-    #socketio.run(app)
 
     return app
