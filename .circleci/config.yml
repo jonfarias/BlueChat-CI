@@ -116,6 +116,7 @@ jobs:
       - run:
           name: Publish
           command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
             echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
             docker push $DOCKER_USER/bluechat-web:$TAG
             docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:dev
