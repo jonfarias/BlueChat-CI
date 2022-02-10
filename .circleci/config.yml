@@ -35,6 +35,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - checkout:
+          path: ~/BlueChat-CI
       - run: |
           echo "Init Tests"
       - persist_to_workspace:
