@@ -30,8 +30,8 @@ commands:
 
 
 jobs:
-
   Tests:
+    working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/base:stable
     steps:
