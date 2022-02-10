@@ -166,13 +166,19 @@ jobs:
       - setup_remote_docker:
           version: 20.10.7
           docker_layer_caching: true
-      - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
-          echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
-          docker push $DOCKER_USER/bluechat-web:$TAG
-          docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:latest
-          docker push $DOCKER_USER/bluechat-web:latest
+      - run: 
+          name: Build
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
+      - run:
+          name: Publish
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM            
+            echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
+            docker push $DOCKER_USER/bluechat-web:$TAG
+            docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:latest
+            docker push $DOCKER_USER/bluechat-web:latest
       - notify_slack_error
 
   GenerateYAML-PROD:
