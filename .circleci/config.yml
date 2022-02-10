@@ -30,7 +30,15 @@ commands:
 
 
 jobs:
-  Test: 
+
+  Tests:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run: |
+          echo "Init Tests"
+
+  Unit Tests: 
     working_directory: ~/BlueChat-CI/
     docker:
       - image: cimg/python:3.8
@@ -77,7 +85,6 @@ jobs:
           name: Test YAML - PROD
           command: |
             ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
-
       - notify_slack_error
       - notify_slack_pass
   
@@ -87,7 +94,6 @@ jobs:
     steps:
       - run: |
           echo "Init Build and Deploy of Development Environment"
-      - notify_slack_hold
 
   Build and Publish-DEV:
     docker:
@@ -187,7 +193,14 @@ workflows:
   version: 2
   CI:
     jobs:
-      - Test:       
+      - Tests:       
+          filters:
+            branches:
+              only: main
+
+      - Unit Tests:
+          requires:
+            - Tests       
           filters:
             branches:
               only: main
@@ -196,7 +209,8 @@ workflows:
       
       - Test YAML:
           requires:
-            - "Test"      
+            - Tests
+            - Unit Tests      
           filters:
             branches:
               only: main
@@ -205,13 +219,11 @@ workflows:
 
       - Development:
           requires:
-            - Test
+            - Unit Tests
             - Test YAML
           filters:
             branches:
               only: main
-          context:
-            - Slack 
 
       - Build and Publish-DEV:
           requires:
