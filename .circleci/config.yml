@@ -37,6 +37,10 @@ jobs:
     steps:
       - run: |
           echo "Init Tests"
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - ./manifests
 
   Unit Tests: 
     working_directory: ~/BlueChat-CI/
@@ -59,10 +63,6 @@ jobs:
           command: |
             . bluechat/bin/activate
             pytest chat/test/ -v
-      - persist_to_workspace:
-          root: .
-          paths: 
-            - ./manifests
       - notify_slack_error
       - notify_slack_pass
 
@@ -209,8 +209,7 @@ workflows:
       
       - Test YAML:
           requires:
-            - Tests
-            - Unit Tests      
+            - Tests  
           filters:
             branches:
               only: main
