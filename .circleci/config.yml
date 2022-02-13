@@ -62,13 +62,15 @@ jobs:
             . bluechat/bin/activate
             pip install --upgrade pip
             pip install --no-cache-dir -r chat/application/requirements.txt
-      #- snyk/scan
       - run:
           name: Run Tests
           command: |
             . bluechat/bin/activate
             pytest chat/test/ -v
-      #- notify_slack_error
+      - snyk/scan:
+          token-variable: SNYK_TOKEN
+          target-file: chat/application/.
+      - notify_slack_error
       - notify_slack_pass
 
   Test YAML:
@@ -90,7 +92,6 @@ jobs:
           name: Test YAML - PROD
           command: |
             ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
-      #- snyk/scan
       - notify_slack_error
       - notify_slack_pass
   
@@ -117,11 +118,6 @@ jobs:
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
-            DOCKER=$DOCKER_USER/bluechat-web:$TAG
-      - snyk/scan:
-          token-variable: SNYK_TOKEN
-          docker-image-name: $DOCKER
-          target-file: chat/application/Dockerfile
       - run:
           name: Publish
           command: |
