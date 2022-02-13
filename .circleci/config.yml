@@ -120,7 +120,7 @@ jobs:
       - snyk/scan:
           token-variable: SNYK_TOKEN
           docker-image-name: $DOCKER_USER/bluechat-web:$TAG
-          target-file: "Dockerfile"
+          target-file: chat/application/Dockerfile
       - run:
           name: Publish
           command: |
