@@ -45,7 +45,7 @@ jobs:
           root: .
           paths: 
             - ./manifests
-      - notify_slack_pass
+      #- notify_slack_pass
 
   Unit Tests: 
     working_directory: ~/BlueChat-CI/
@@ -68,7 +68,7 @@ jobs:
           name: Run Tests
           command: |
             pytest chat/test/ -v
-      - notify_slack_error
+      #- notify_slack_error
 
   Test YAML:
     docker:
@@ -97,7 +97,7 @@ jobs:
     steps:
       - run: |
           echo "Init Build and Deploy of Development Environment"
-      - notify_slack_pass
+      #- notify_slack_pass
 
   Build and Publish-DEV:
     docker:
@@ -123,7 +123,7 @@ jobs:
             docker push $DOCKER_USER/bluechat-web:$TAG
             docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:dev
             docker push $DOCKER_USER/bluechat-web:dev
-      - notify_slack_error
+      #- notify_slack_error
 
   GenerateYAML-DEV:
     docker:
@@ -146,7 +146,7 @@ jobs:
             git commit -m "Update via CircleCI - BUILD_NUM = $TAG"
             git branch -M main
             git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
-      - notify_slack_error
+      #- notify_slack_error
 
   Production:
     docker:
@@ -154,7 +154,7 @@ jobs:
     steps:
       - run: |
           echo "Aprove this task to init Production Build and Deploy"
-      - notify_slack_hold
+      #- notify_slack_hold
   
 
   Build and Publish-PROD:
@@ -181,7 +181,7 @@ jobs:
             docker push $DOCKER_USER/bluechat-web:$TAG
             docker tag $DOCKER_USER/bluechat-web:$TAG $DOCKER_USER/bluechat-web:latest
             docker push $DOCKER_USER/bluechat-web:latest
-      - notify_slack_error
+      #- notify_slack_error
 
   GenerateYAML-PROD:
     docker:
@@ -203,7 +203,7 @@ jobs:
           git branch -M main
           git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
           ls
-      - notify_slack_deploy
+      #- notify_slack_deploy
 
 workflows:
   version: 2
