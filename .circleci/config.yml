@@ -117,9 +117,10 @@ jobs:
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
+            DOCKER=$DOCKER_USER/bluechat-web:$TAG
       - snyk/scan:
           token-variable: SNYK_TOKEN
-          docker-image-name: $DOCKER_USER/bluechat-web:$TAG
+          docker-image-name: $DOCKER
           target-file: chat/application/Dockerfile
       - run:
           name: Publish
