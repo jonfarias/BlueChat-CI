@@ -157,7 +157,7 @@ jobs:
       - notify_slack_hold
   
 
-  Build and Publish-PROD:
+  Build and Release-PROD:
     docker:
       - image: cimg/python:3.8
         auth:
@@ -174,7 +174,7 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
       - run:
-          name: Publish
+          name: Release
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM            
             echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
