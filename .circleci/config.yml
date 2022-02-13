@@ -68,7 +68,7 @@ jobs:
           command: |
             . bluechat/bin/activate
             pytest chat/test/ -v
-      - notify_slack_error
+      #- notify_slack_error
       - notify_slack_pass
 
   Test YAML:
