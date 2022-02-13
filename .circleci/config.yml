@@ -203,7 +203,7 @@ jobs:
           git branch -M main
           git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/jonfarias/BlueChat-CD.git main
           ls
-      - notify_slack_deploy
+      #- notify_slack_deploy
 
 workflows:
   version: 2
