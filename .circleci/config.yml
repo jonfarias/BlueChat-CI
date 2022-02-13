@@ -58,18 +58,15 @@ jobs:
       - run:
           name: Setup VirtualEnv
           command: |
-            virtualenv bluechat
-            . bluechat/bin/activate
             pip install --upgrade pip
             pip install --no-cache-dir -r chat/application/requirements.txt
-      - run:
-          name: Run Tests
-          command: |
-            . bluechat/bin/activate
-            pytest chat/test/ -v
       - snyk/scan:
           token-variable: SNYK_TOKEN
           target-file: chat/application/requirements.txt
+      - run:
+          name: Run Tests
+          command: |
+            pytest chat/test/ -v
       - notify_slack_error
       - notify_slack_pass
 
