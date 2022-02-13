@@ -1,7 +1,9 @@
 version: 2.1
 orbs:
-  python: circleci/python@1.2
-  slack: circleci/slack@4.6.0
+  python: circleci/python@2.0.0
+  slack: circleci/slack@4.8.0
+  snyk: snyk/snyk@1.1.2
+
 
 commands:
   notify_slack_error:
@@ -60,6 +62,7 @@ jobs:
             . bluechat/bin/activate
             pip install --upgrade pip
             pip install --no-cache-dir -r chat/application/requirements.txt
+      - snyk/scan
       - run:
           name: Run Tests
           command: |
