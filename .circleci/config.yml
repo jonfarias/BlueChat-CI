@@ -99,7 +99,7 @@ jobs:
           echo "Init Build and Deploy of Development Environment"
       - notify_slack_pass
 
-  Build and Publish-DEV:
+  Build and Release-DEV:
     docker:
       - image: cimg/python:3.8
         auth:
@@ -116,7 +116,7 @@ jobs:
             TAG=0.1.$CIRCLE_BUILD_NUM
             docker build -t $DOCKER_USER/bluechat-web:$TAG chat/application/.
       - run:
-          name: Publish
+          name: Release
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
             echo $DOCKER_PASSWD | docker login -u $DOCKER_USER --password-stdin
@@ -244,7 +244,7 @@ workflows:
           context:
             - Slack
 
-      - Build and Publish-DEV:
+      - Build and Release-DEV:
           requires:
             - Development
           filters:
@@ -255,7 +255,7 @@ workflows:
 
       - GenerateYAML-DEV:
           requires:
-            - Build and Publish-DEV
+            - Build and Release-DEV
           filters:
             branches:
               only: main
@@ -273,7 +273,7 @@ workflows:
           context:
             - Slack
 
-      - Build and Publish-PROD:
+      - Build and Release-PROD:
           requires:
             - Production
           filters:
@@ -284,7 +284,7 @@ workflows:
 
       - GenerateYAML-PROD:
           requires:
-            - Build and Publish-PROD
+            - Build and Release-PROD
           filters:
             branches:
               only: main
