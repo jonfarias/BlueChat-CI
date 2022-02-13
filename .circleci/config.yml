@@ -69,7 +69,7 @@ jobs:
             pytest chat/test/ -v
       - snyk/scan:
           token-variable: SNYK_TOKEN
-          target-file: chat/application/.
+          target-file: chat/application/requirements.txt
       - notify_slack_error
       - notify_slack_pass
 
