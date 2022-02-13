@@ -62,7 +62,7 @@ jobs:
             . bluechat/bin/activate
             pip install --upgrade pip
             pip install --no-cache-dir -r chat/application/requirements.txt
-      - snyk/scan
+      #- snyk/scan
       - run:
           name: Run Tests
           command: |
@@ -90,6 +90,7 @@ jobs:
           name: Test YAML - PROD
           command: |
             ./kubeval /tmp/workspace/manifests/bluechat-prod/bluechat-deploy-prod.yml
+      - snyk/scan
       - notify_slack_error
       - notify_slack_pass
   
