@@ -23,7 +23,7 @@ def create_app():
     url = "mysql+pymysql://%s:%s@%s:%s/%s" %(user, pwd, host, port, database)
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['SESSION_TYPE'] = os.environ.get('SESSION_TYPE')
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SQLALCHEMY_DATABASE_URI'] = url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
