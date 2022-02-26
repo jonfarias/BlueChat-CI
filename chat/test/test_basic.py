@@ -1,5 +1,7 @@
 from flask import abort, url_for
 import os
+from application.models import User
+from application.app import db
 
 def test_app_is_created(app):
         assert app.name == "application.app"
@@ -33,5 +35,11 @@ def login(client, username, password):
 
 
 def logout(client):
-    return client.get(url_for('auth.logout'), follow_redirects=True)
+    assert client.get(url_for('auth.logout'), follow_redirects=True)
 
+def user():
+        db.create_all()
+        new_user = User(email=teste@gmail.com, name=Teste, password=generate_password_hash(teste12345, method='sha256'))
+        db.session.add(new_user)
+        db.session.commit()
+        assert User.query.filter_by(email=teste@gmail.com).first()
