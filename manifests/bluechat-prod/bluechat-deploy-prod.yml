@@ -9,7 +9,7 @@ spec:
   selector:
     app: bluechat-db-prod
   ports:
-    - name: db-port
+    - name: db-port-prod
       protocol: TCP
       port: 3306
       targetPort: 3306

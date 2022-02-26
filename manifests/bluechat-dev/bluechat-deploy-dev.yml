@@ -9,7 +9,7 @@ spec:
   selector:
     app: bluechat-db-dev
   ports:
-    - name: db-port
+    - name: db-port-dev
       protocol: TCP
       port: 3306
       targetPort: 3306
@@ -90,7 +90,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: bluechat
+    app: bluechat-dev
   ports:
   - name: http
     port: 80
@@ -102,7 +102,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bluechat-deploy
+  name: bluechat-deploy-dev
   namespace: bluechat-dev
 spec:
   replicas: 1
