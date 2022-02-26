@@ -115,7 +115,7 @@ spec:
       initContainers:
         - name: check-mysql
           image: busybox:1.31.1
-          command: ['sh', '-c', 'until nslookup db.bluechat-prod.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
+          command: ['sh', '-c', 'until nslookup bluechat-db-dev.bluechat-dev.svc.cluster.local; do echo waiting for mysql; sleep 2; done;'] 
       containers:
       - name: bluechat-container
         image: jonfarias/bluechat-web:$TAG
