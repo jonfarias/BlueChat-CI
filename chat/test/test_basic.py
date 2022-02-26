@@ -3,6 +3,7 @@ import os
 from sqlalchemy import create_engine
 from flask_login import UserMixin
 
+engine = create_engine('sqlite://')
 
 def test_app_is_created(app):
         assert app.name == "application.app"
@@ -31,13 +32,12 @@ def logout(client):
 
 
 class User(UserMixin):
-    id = db.Column(db.Integer, primary_key=True) 
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
+    id = engine.Column(engine.Integer, primary_key=True) 
+    email = engine.Column(engine.String(100), unique=True)
+    password = engine.Column(engine.String(100))
+    name = engine.Column(engine.String(1000))
 
 def user():
-        engine = create_engine('sqlite://')
         engine.create_all()
         new_user = User(email=teste@gmail.com, name=Teste, password=generate_password_hash(teste12345, method='sha256'))
         engine.session.add(new_user)
