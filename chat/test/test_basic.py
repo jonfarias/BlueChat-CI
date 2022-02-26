@@ -1,9 +1,5 @@
 from flask import abort, url_for
 import os
-from sqlalchemy import create_engine
-from flask_login import UserMixin
-
-engine = create_engine('sqlite://')
 
 def test_app_is_created(app):
         assert app.name == "application.app"
@@ -29,17 +25,3 @@ def login(client, username, password):
 
 def logout(client):
     assert client.get(url_for('auth.logout'), follow_redirects=True)
-
-
-class User(UserMixin):
-    id = engine.Column(engine.Integer, primary_key=True) 
-    email = engine.Column(engine.String(100), unique=True)
-    password = engine.Column(engine.String(100))
-    name = engine.Column(engine.String(1000))
-
-def user():
-        engine.create_all()
-        new_user = User(email=teste@gmail.com, name=Teste, password=generate_password_hash(teste12345, method='sha256'))
-        engine.session.add(new_user)
-        engine.session.commit()
-        assert User.query.filter_by(email=teste@gmail.com).first()
