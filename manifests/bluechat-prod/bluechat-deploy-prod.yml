@@ -146,12 +146,7 @@ spec:
           valueFrom:
               secretKeyRef:
                 name: bluechat-secret-prod
-                key: secret-key
-        - name: SESSION_TYPE
-          valueFrom:
-              secretKeyRef:
-                name: bluechat-secret-prod
-                key: session-type    
+                key: secret-key  
         - name: FLASK_ENV
           valueFrom:
               secretKeyRef:
