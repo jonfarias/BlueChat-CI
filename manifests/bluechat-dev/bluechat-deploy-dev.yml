@@ -34,9 +34,12 @@ spec:
       - name: bluechat-db
         image: jonfarias/bluechat-db:1
         resources:
+          request:
+            memory: "128Mi"
+            cpu: "100m"
           limits:
             memory: "256Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 3306
         env:
@@ -113,9 +116,12 @@ spec:
       - name: bluechat-container
         image: jonfarias/bluechat-web:$TAG
         resources:
+          request:
+            memory: "128Mi"
+            cpu: "100m"
           limits:
             memory: "256Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 5000
         env:
