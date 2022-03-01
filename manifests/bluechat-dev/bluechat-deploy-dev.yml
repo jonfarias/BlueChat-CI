@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: bluechat-db-dev
   namespace: bluechat-dev
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   type: ClusterIP
   selector:
@@ -22,6 +24,8 @@ kind: Deployment
 metadata:
   name: db-deploy-dev
   namespace: bluechat-dev
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   replicas: 1
   template:
@@ -72,6 +76,8 @@ kind: Service
 metadata:
   name: bluechat-dev
   namespace: bluechat-dev
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   type: ClusterIP
   selector:
@@ -89,6 +95,8 @@ kind: Deployment
 metadata:
   name: bluechat-deploy-dev
   namespace: bluechat-dev
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   replicas: 1
   template:
