@@ -66,14 +66,6 @@ spec:
 
 ---
 
-#Namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: bluechat-dev
-
----
-
 #Service Bluechat
 apiVersion: v1
 kind: Service
